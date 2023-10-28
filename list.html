@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <ul id="list">
+
+    </ul>
+
+
+
+         <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js"></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js"></script>
+    
+    <script id="MainScript">
+        const firebaseConfig = {
+            apiKey: "AIzaSyAQ2QCXCj5U-qgMKccM9eZv6l9u2DMQcto",
+            authDomain: "inscription-89165.firebaseapp.com",
+            databaseURL: "https://inscription-89165-default-rtdb.firebaseio.com",
+            projectId: "inscription-89165",
+            storageBucket: "inscription-89165.appspot.com",
+            messagingSenderId: "154600222513",
+            appId: "1:154600222513:web:7ef6fce7c03bbdc6994a10",
+            measurementId: "G-ZGTP7GD2NL"
+        };
+      
+        firebase.initializeApp(firebaseConfig);
+      
+        //Initialize variables
+      
+      
+        //const auth = firebase.auth();
+        //const fs = firebase.firestore();
+        const db = firebase.database();
+
+
+        var stdNo=0;
+  
+  function addItemsToList(name,rollNo,sec,gen) {
+    var ul = document.getElementById('list');
+    var header = document.createElement('li');
+
+    var _name= document.getElementById('li');
+    var _rollNo= document.getElementById('li');
+    var _sec= document.getElementById('li');
+    var _gen= document.getElementById('li');
+
+    header.innerHTML='Student-' + (++stdNo);
+
+    _name.innerHTML='Name: '+name;
+    _rollNo.innerHTML='age: '+rollNo;
+   // _sec.innerHTML='Name: '+sec;
+   // _gen.innerHTML='Name: '+gen;
+
+    ul.appendChild(header);
+    ul.appendChild(_name);
+    //ul.appendChild(_rollNo);
+    //ul.appendChild(_sec);
+    //ul.appendChild(_gen);
+  }
+
+  function fetchAllData(){
+    db().ref('student').once('value',function(snapshot){
+      snapshot.forEach(
+        function(ChildSnapshot){
+          let name = ChildSnapshot.val().Name;
+          let rollNo = ChildSnapshot.val().age;
+          //let sec = ChildSnapshot.val().nameOfStudent;
+          //let gen = ChildSnapshot.val().nameOfStudent;
+          addItemsToList(name,rollNo);
+          console.log(name);
+        }
+      );
+    });
+
+    
+  }
+  //window.onload(fetchAllData);
+  window.addEventListener('load', fetchAllData);
+
+      </script>
+</body>
+</html>
